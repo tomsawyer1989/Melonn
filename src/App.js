@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { getSessions } from './services/users';
 import LoginPage from './pages/login/LoginPage';
 import ExistingUsers from './pages/existingUsers/ExistingUsers';
@@ -8,7 +8,7 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [valuesLogin, setValuesLogin] = useState(null);
-  const [user, setUser] = useState('');
+  const [loadingLogin, setLoadingLogin] = useState(false);
 
   useEffect(() => {
     if (valuesLogin !== null) {
@@ -20,17 +20,23 @@ function App() {
     getSessions()
     .then(response => {
       if (response.success) {
-        const userAux = response.sessions.filter(item => item.username === valuesLogin.username && item.password === valuesLogin.password)[0];
-        if (userAux !== undefined) {
-          setUser(userAux.name);
+        const user = response.sessions.filter(item => item.username === valuesLogin.username && item.password === valuesLogin.password)[0];
+        if (user !== undefined) {
+          localStorage.setItem('user', user.name);
           setLoggedIn(true);
+        }
+        else {
+          alert('Credenciales incorrectas...');
         }
       }
     });
+
+    setLoadingLogin(false);
   }
 
   const getValuesLoginForm = (values) => {
     setValuesLogin(values);
+    setLoadingLogin(true);
   }
 
   const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -52,12 +58,15 @@ function App() {
   );
 
   return (
+    <>
     <BrowserRouter>
       <Switch>
         <GuestRoute exact path="/login" component={LoginPage} />
         <PrivateRoute exact path="/existing-users" component={ExistingUsers} />
+        <Redirect to="/login" />
       </Switch>
     </BrowserRouter>
+    </>
   );
 }
 

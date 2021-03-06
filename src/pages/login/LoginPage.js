@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginForm from '../../components/forms/LoginForm';
-import { AppSizeListener, Grid, GridCell } from "@react-md/utils";
+import { Row, Col } from 'antd';
 
 function LoginPage (props) {
 
@@ -9,39 +9,33 @@ function LoginPage (props) {
     }
 
     return(
-        <div>
-            <div style={styles.login}>
-                <AppSizeListener>
-                    <Grid>
-                        <GridCell colSpan={12}>
-                            <p style={styles.title}>Inicio de sesión</p>
-                        </GridCell>
-                        <GridCell colSpan={12}>
-                            <LoginForm getValuesLoginForm={getValuesLoginForm}/>
-                        </GridCell>
-                    </Grid>
-                </AppSizeListener>
-            </div>
-        </div>
+        <Row >
+            <Col span={6} offset={15} style={styles.container}>
+                <Row>
+                    <Col span={24}>
+                        <p style={styles.title}>Inicio de sesión</p>
+                    </Col>
+                    <Col span={24}>
+                        <LoginForm getValuesLoginForm={getValuesLoginForm}/>
+                    </Col>
+                </Row>
+            </Col>
+        </Row>
     );
 }
 
 const styles = {
-    title: {
-        marginTop: 20,
-        marginBottom: 30,
-        textAlign: 'center',
-        fontSize: 26,
-    },
-    login: {
-        paddingLeft: 40,
-        paddingRight: 40,
-        width: 360,
-        height: 350,
+    container: {
         marginTop: 250,
-        marginLeft: 845,
+        padding: 40,
         borderRadius: 35,
         boxShadow: '0px 0px 50px gray',
+        background: 'white',
+    },
+    title: {
+        marginBottom: 40,
+        textAlign: 'center',
+        fontSize: 26,
     },
 };
 

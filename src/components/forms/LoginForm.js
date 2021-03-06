@@ -1,70 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { Form, TextField } from '@react-md/form';
-import { Button } from '@react-md/button';
-import { FontIcon } from '@react-md/icon';
+import React from 'react';
+import { Form, Input, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 function LoginForm (props) {
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
-    const handleSubmit = () => {
-        const values = {
-            username,
-            password
-        };
-
+    const handleSubmit = (values) => {
         props.getValuesLoginForm(values);
     }
 
     return (
-        <Form onSubmit={() => handleSubmit()}>
-            <TextField
-                style={styles.textField}
-                id='username'
-                placeholder="Escribe el usuario"
-                label='Usuario'
-                onChange={(event) => setUsername(event.currentTarget.value)}
-                rightChildren= {<FontIcon>person_outline</FontIcon>}
-                required
-            />
-            <TextField
-                style={styles.textField}
-                id='password'
-                placeholder="Escribe la contraseña"
-                label='Contraseña'
-                onChange={(event) => setPassword(event.currentTarget.value)}
-                rightChildren= {<FontIcon>lock_outline</FontIcon>}
-                required
-            />
-            <Button
-                style={styles.button}
-                id="submit"
-                type='submit'
-                theme='primary'
-                themeType="contained"
+        <Form
+            name="normal_login"
+            className="login-form"
+            initialValues={{ remember: true }}
+            onFinish={handleSubmit}
+        >
+            <Form.Item
+                name="username"
+                rules={[{ required: true, message: 'Escribe el usuario' }]}
             >
-                Iniciar sesión
-            </Button>
+                <Input suffix={<UserOutlined className="site-form-item-icon" />} placeholder="Usuario" />
+            </Form.Item>
+            <Form.Item
+                name="password"
+                rules={[{ required: true, message: 'Escribe la contraseña' }]}
+            >
+                <Input suffix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Contraseña"/>
+            </Form.Item>
+            <Form.Item>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                    Iniciar sesión
+                </Button>
+            </Form.Item>
         </Form>
     );
 }
 
-const styles = {
-    textField: {
-        width: 250,
-        height: 45,
-        fontSize: 13,
-    },
-    button: {
-        marginTop: 40,
-        width: 250,
-        height: 45,
-        color: 'white',
-        fontSize: 13,
-        textTransform: 'none',
-        fontWeight: 'normal',
-    },
-};
-
-export default LoginForm
+export default LoginForm;
