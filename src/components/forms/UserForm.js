@@ -90,14 +90,14 @@ function UserForm (props) {
                 </Col>
                 <Col span={props.originLabel === 'post' ? 4 : 11} offset={props.originLabel === 'post' ? 7 : 0}>
                     <Form.Item>
-                        <Button style={{width: '100%', borderRadius: 5}} type="primary" htmlType="submit" className="user-form-button">
+                        <Button style={{background: 'green', width: '100%', borderRadius: 5}} type="primary" htmlType="submit" className="user-form-button">
                             {props.originLabel === 'post' ? 'Aceptar' : 'Filtrar'}
                         </Button>
                     </Form.Item>
                 </Col>
                 <Col span={props.originLabel === 'post' ? 4 : 11} offset={props.originLabel === 'post' ? 2 : 2}>
                     <Form.Item>
-                        <Button style={{width: '100%', borderRadius: 5}} type="secondary" className="user-form-button">
+                        <Button style={{background: 'white', color: 'green', width: '100%', borderRadius: 5}} type="secondary" className="user-form-button">
                             {props.originLabel === 'post' ? 'Cancelar' : 'Limpiar'}
                         </Button>
                     </Form.Item>

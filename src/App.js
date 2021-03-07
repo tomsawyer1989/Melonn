@@ -28,10 +28,10 @@ function App() {
         else {
           alert('Credenciales incorrectas...');
         }
+
+        setLoadingLogin(false);
       }
     });
-
-    setLoadingLogin(false);
   }
 
   const getValuesLoginForm = (values) => {
@@ -58,7 +58,7 @@ function App() {
     <Route
       {...rest}
       render={localProps =>
-        loggedIn === false ? <Component {...localProps} getValuesLoginForm={getValuesLoginForm}/> : <Redirect to="/existing-users" />
+        loggedIn === false ? <Component {...localProps} loadingLogin={loadingLogin} getValuesLoginForm={getValuesLoginForm}/> : <Redirect to="/existing-users" />
       }
     />
   );
