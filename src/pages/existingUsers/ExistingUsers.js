@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Default from '../../components/layouts/Default';
 import { Modal, Row, Col, Button, Table } from 'antd';
 import { UsergroupAddOutlined } from '@ant-design/icons';
 import UserForm from '../../components/forms/UserForm';
+import { getUsers, postUser } from '../../services/users';
 
 function ExistingUsers (props) {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [data, setData] = useState([]);
 
     const columns = [
-        { title: 'Name', dataIndex: 'name', key: 'name' },
-        { title: 'Age', dataIndex: 'age', key: 'age' },
-        { title: 'Address', dataIndex: 'address', key: 'address' },
+        { title: 'Nombres', dataIndex: 'name', key: 'name' },
+        { title: 'Apellidos', dataIndex: 'lastname', key: 'lastname' },
+        { title: 'Identificación (C.C)', dataIndex: 'identity', key: 'identity' },
+        { title: 'Rol asociado', dataIndex: 'role', key: 'role' },
+        { title: 'Estado', dataIndex: 'state', key: 'state' },
+        { title: 'Teléfono', dataIndex: 'phone', key: 'phone' },
+        { title: 'Correo electrónico', dataIndex: 'email', key: 'email' },
         {
           title: 'Action',
           dataIndex: '',
@@ -20,36 +26,49 @@ function ExistingUsers (props) {
         },
     ];
       
-    const data = [
-        {
-          key: 1,
-          name: 'John Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-          description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-        },
-        {
-          key: 2,
-          name: 'Jim Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-          description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-        },
-        {
-          key: 3,
-          name: 'Not Expandable',
-          age: 29,
-          address: 'Jiangsu No. 1 Lake Park',
-          description: 'This not expandable',
-        },
-        {
-          key: 4,
-          name: 'Joe Black',
-          age: 32,
-          address: 'Sidney No. 1 Lake Park',
-          description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-        },
-    ];
+    // const data = [
+    //     {
+    //       key: 1,
+    //       name: 'John Brown',
+    //       age: 32,
+    //       address: 'New York No. 1 Lake Park',
+    //       description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+    //     },
+    //     {
+    //       key: 2,
+    //       name: 'Jim Green',
+    //       age: 42,
+    //       address: 'London No. 1 Lake Park',
+    //       description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
+    //     },
+    //     {
+    //       key: 3,
+    //       name: 'Not Expandable',
+    //       age: 29,
+    //       address: 'Jiangsu No. 1 Lake Park',
+    //       description: 'This not expandable',
+    //     },
+    //     {
+    //       key: 4,
+    //       name: 'Joe Black',
+    //       age: 32,
+    //       address: 'Sidney No. 1 Lake Park',
+    //       description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
+    //     },
+    // ];
+
+    useEffect(() => {
+        getUsers()
+        .then(response => {
+            if (response.success) {
+                const dataAux = response.users.map(item => {
+                    item.key = item.id;
+                    return item;
+                });
+                setData(dataAux);
+            }
+        });
+    }, []);
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -60,7 +79,15 @@ function ExistingUsers (props) {
     };
 
     const getValuesUserForm = (values) => {
-        console.log('values ', values);
+        postUser(values)
+        .then(response => {
+            if (response.success) {
+                response.user.key = response.user.id;
+                const dataAux = [...data];
+                dataAux.push(response.user);
+                setData(dataAux);
+            }
+        });
     }
 
     return (
@@ -86,10 +113,6 @@ function ExistingUsers (props) {
                         <Col span={24} style={{marginTop: 60}}>
                             <Table
                                 columns={columns}
-                                expandable={{
-                                expandedRowRender: record => <p style={{ margin: 0 }}>{record.description}</p>,
-                                rowExpandable: record => record.name !== 'Not Expandable',
-                                }}
                                 dataSource={data}
                             />
                         </Col>
