@@ -19,6 +19,10 @@ function Default (props) {
         setCollapsed(!collapsed);
     };
 
+    const logOut = () => {
+        props.logOut(true);
+    }
+
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -54,10 +58,10 @@ function Default (props) {
                         onClick: toggle,
                     })}
                     <span style={{marginLeft: 15, fontSize: 20}}>Prueba Front-end</span>
-                    <Avatar style={{marginLeft: 650}} size="large" icon={<UserOutlined />}/>
+                    <Avatar style={{marginLeft: '54%'}} size="large" icon={<UserOutlined />}/>
                     <span style={{marginLeft: 15, color: 'black'}}>{localStorage.getItem('user')}</span>
                     <Tooltip title="Cerrar sesión">
-                        <Button shape="circle" icon={<ExportOutlined />} style={{marginLeft: 40}}/>
+                        <Button shape="circle" icon={<ExportOutlined />} style={{marginLeft: 40}} onClick={() => logOut()}/>
                     </Tooltip>
                 </Header>
                 <Content

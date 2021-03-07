@@ -97,6 +97,10 @@ function ExistingUsers (props) {
         });
     }, []);
 
+    const logOut = (value) => {
+        props.logOut(value);
+    }
+
     const showModal = () => {
         setIsModalVisible(true);
     };
@@ -161,7 +165,7 @@ function ExistingUsers (props) {
     }
 
     return (
-        <Default render={
+        <Default logOut={logOut} render={
             <Row style={{background: '#eeefff'}}>
                 <Col span={18} style={{padding: 20, background: 'white'}}>
                     <Row>

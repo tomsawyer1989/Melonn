@@ -39,11 +39,17 @@ function App() {
     setLoadingLogin(true);
   }
 
+  const logOut = (value) => {
+    if (value) {
+      setLoggedIn(false);
+    }
+  }
+
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
       render={localProps =>
-        loggedIn === true ? <Component {...localProps} /> : <Redirect to="/login" />
+        loggedIn === true ? <Component {...localProps} logOut={logOut}/> : <Redirect to="/login" />
       }
     />
   );
