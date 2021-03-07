@@ -1,31 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import Default from '../../components/layouts/Default';
-import { Modal, Row, Col, Button, Table } from 'antd';
+import { Modal, Row, Col, Button } from 'antd';
 import { UsergroupAddOutlined } from '@ant-design/icons';
 import UserForm from '../../components/forms/UserForm';
-import { getUsers, postUser } from '../../services/users';
+import { getUsers, postUser, patchUser, deleteUser } from '../../services/users';
+import MaterialTable from 'material-table';
 
 function ExistingUsers (props) {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [data, setData] = useState([]);
+    const [modalLabel, setModalLabel] = useState('');
+    const [userPatch, setUserPatch] = useState(null);
 
     const columns = [
-        { title: 'Nombres', dataIndex: 'name', key: 'name' },
-        { title: 'Apellidos', dataIndex: 'lastname', key: 'lastname' },
-        { title: 'Identificación (C.C)', dataIndex: 'identity', key: 'identity' },
-        { title: 'Rol asociado', dataIndex: 'role', key: 'role' },
-        { title: 'Estado', dataIndex: 'state', key: 'state' },
-        { title: 'Teléfono', dataIndex: 'phone', key: 'phone' },
-        { title: 'Correo electrónico', dataIndex: 'email', key: 'email' },
         {
-          title: 'Action',
-          dataIndex: '',
-          key: 'x',
-          render: () => <a>Delete</a>,
+            title: "Nombres",
+            field: "name",
+        },
+        {
+            title: "Apellidos",
+            field: "lastname",
+        },
+        {
+            title: "Identificación (C.C)",
+            field: "identity",
+        },
+        {
+            title: "Rol asociado",
+            field: "role",
+        },
+        {
+            title: "Estado",
+            field: "state",
+        },
+        {
+            title: "Teléfono",
+            field: "phone",
+        },
+        {
+            title: "Correo electrónico",
+            field: "email",
         },
     ];
-      
+
+    const actions = [
+        {
+            icon: 'edit',
+            tooltip: 'Editar',
+            onClick: (event, rowData) => {showModal(); setModalLabel('editing'); setUserPatch(rowData);}
+        },
+        {
+            icon: 'delete',
+            tooltip: 'Eliminar',
+            onClick: (event, rowData) => removeUser(rowData)
+        }
+    ];
+
     // const data = [
     //     {
     //       key: 1,
@@ -61,11 +92,7 @@ function ExistingUsers (props) {
         getUsers()
         .then(response => {
             if (response.success) {
-                const dataAux = response.users.map(item => {
-                    item.key = item.id;
-                    return item;
-                });
-                setData(dataAux);
+                setData(response.users);
             }
         });
     }, []);
@@ -74,17 +101,60 @@ function ExistingUsers (props) {
         setIsModalVisible(true);
     };
     
-    const handleCancel = () => {
+    const hiddenModal = () => {
         setIsModalVisible(false);
     };
 
-    const getValuesUserForm = (values) => {
-        postUser(values)
+    const getValuesUserForm = (values, origin) => {
+        if (origin === 'post') {
+            switch (modalLabel) {
+                case 'creating':
+                    postUser(values)
+                    .then(response => {
+                        if (response.success) {
+                            const dataAux = [...data];
+                            dataAux.push(response.user);
+                            setData(dataAux);
+                        }
+                    });
+    
+                    hiddenModal();
+                break;
+    
+                case 'editing':
+                    const params = userPatch.id;
+    
+                    patchUser(params, values)
+                    .then(response => {
+                        if (response.success) {
+                            const dataAux = [...data];
+                            const index = dataAux.indexOf(userPatch);
+                            index !== -1 && dataAux.splice(index, 1);
+                            dataAux.push(response.user);
+                            setData(dataAux);
+                        }
+                    });
+    
+                    hiddenModal();
+                break;
+
+                default: console.log('');
+            }
+        }
+        else {
+            alert('Esta función de filtrado, aún no está implementada.');
+        }
+    }
+
+    const removeUser = (user) => {
+        const params = user.id;
+
+        deleteUser(params)
         .then(response => {
             if (response.success) {
-                response.user.key = response.user.id;
                 const dataAux = [...data];
-                dataAux.push(response.user);
+                const index = dataAux.indexOf(user);
+                index !== -1 && dataAux.splice(index, 1);
                 setData(dataAux);
             }
         });
@@ -104,16 +174,19 @@ function ExistingUsers (props) {
                                     <span style={{color: 'blue', fontSize: 20}}>Usuarios existentes</span>
                                 </Col>
                                 <Col span={3}>
-                                    <Button type="primary" style={{width: '100%', borderRadius: 5}} onClick={() => showModal()}>
+                                    <Button type="primary" style={{width: '100%', borderRadius: 5}} onClick={() => {showModal(); setModalLabel('creating');}}>
                                         Crear
                                     </Button>
                                 </Col>
                             </Row>
                         </Col>
                         <Col span={24} style={{marginTop: 60}}>
-                            <Table
+                            <MaterialTable
+                                title=''
+                                data={data}
                                 columns={columns}
-                                dataSource={data}
+                                options={{ search: true, paging: true, filtering: false, actionsColumnIndex: -1, exportButton: true }}
+                                actions={actions}
                             />
                         </Col>
                     </Row>
@@ -135,7 +208,7 @@ function ExistingUsers (props) {
                         </Col>
                     </Row>
                 </Col>
-                <Modal width={600} title="Agregar nuevo usuario" visible={isModalVisible} footer={null} onCancel={() => handleCancel()}>
+                <Modal width={600} title="Agregar nuevo usuario" visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
                     <UserForm originLabel='post' getValuesUserForm={getValuesUserForm}/>
                 </Modal>
             </Row>

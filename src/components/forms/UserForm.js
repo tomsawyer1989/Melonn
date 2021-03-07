@@ -4,7 +4,7 @@ import { Form, Input, Button, Row, Col, } from 'antd';
 function UserForm (props) {
 
     const handleSubmit = (values) => {
-        props.getValuesUserForm(values);
+        props.getValuesUserForm(values, props.originLabel);
     }
 
     return (

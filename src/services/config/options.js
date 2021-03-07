@@ -9,3 +9,15 @@ export const optionsPOST = (body) => ({
         'Content-Type': 'application/json'
     }
 });
+
+export const optionsPATCH = (body) => ({
+    method: 'PATCH',
+    body: JSON.stringify(body),
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+export const optionsDELETE = () => ({
+    method: 'DELETE'
+});
