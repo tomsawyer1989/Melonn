@@ -28,7 +28,7 @@ function LoginForm (props) {
                 <Input suffix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Contraseña"/>
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
+                <Button style={{width: '100%', borderRadius: 5}} type="primary" htmlType="submit" className="login-form-button">
                     Iniciar sesión
                 </Button>
             </Form.Item>
