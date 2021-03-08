@@ -57,37 +57,6 @@ function ExistingUsers (props) {
         }
     ];
 
-    // const data = [
-    //     {
-    //       key: 1,
-    //       name: 'John Brown',
-    //       age: 32,
-    //       address: 'New York No. 1 Lake Park',
-    //       description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-    //     },
-    //     {
-    //       key: 2,
-    //       name: 'Jim Green',
-    //       age: 42,
-    //       address: 'London No. 1 Lake Park',
-    //       description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-    //     },
-    //     {
-    //       key: 3,
-    //       name: 'Not Expandable',
-    //       age: 29,
-    //       address: 'Jiangsu No. 1 Lake Park',
-    //       description: 'This not expandable',
-    //     },
-    //     {
-    //       key: 4,
-    //       name: 'Joe Black',
-    //       age: 32,
-    //       address: 'Sidney No. 1 Lake Park',
-    //       description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-    //     },
-    // ];
-
     useEffect(() => {
         getUsers()
         .then(response => {
@@ -167,7 +136,7 @@ function ExistingUsers (props) {
     return (
         <Default logOut={logOut} render={
             <Row style={{background: '#eeefff'}}>
-                <Col span={18} style={{padding: 20, background: 'white'}}>
+                <Col xs={24} lg={{span: 18}} style={{padding: 20, background: 'white'}}>
                     <Row>
                         <Col span={24}>
                             <Row>
@@ -195,7 +164,7 @@ function ExistingUsers (props) {
                         </Col>
                     </Row>
                 </Col>
-                <Col span={5} offset={1} style={{padding: 20, background: 'white'}}>
+                <Col xs={24} lg={{span: 5, offset: 1}} style={{padding: 20, background: 'white'}}>
                     <Row>
                         <Col span={24}>
                             <Row>

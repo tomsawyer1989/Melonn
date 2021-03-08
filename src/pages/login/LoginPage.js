@@ -44,7 +44,7 @@ function LoginPage (props) {
             </Row>
         </Backdrop>
         <Row>
-            <Col span={6} offset={15} style={styles.container}>
+            <Col xs={24} md={{span: 6, offset: 15}} style={styles.container}>
                 <Row>
                     <Col span={24}>
                         <p style={styles.title}>Inicio de sesión</p>
