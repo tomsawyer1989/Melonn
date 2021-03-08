@@ -8,5 +8,93 @@
     }
   ],
   "users": [
+    {
+      "name": "Andrés Felipe",
+      "lastname": "Garcia Castro",
+      "identity": "114485404",
+      "role": "Administrador",
+      "state": "Activo",
+      "password": "123456",
+      "phone": "3165303978 ",
+      "email": "afgarcia@refinal.com",
+      "id": 1
+    },
+    {
+      "name": "Elizabeth",
+      "lastname": "Arboleda",
+      "identity": "665789080",
+      "role": "Administrador",
+      "state": "Inactivo",
+      "password": "123456",
+      "phone": "3165303978",
+      "email": " earboleda@refinal.com",
+      "id": 2
+    },
+    {
+      "name": "Jader",
+      "lastname": "Penagos",
+      "identity": "665789043",
+      "role": "Conductor",
+      "state": "Activo",
+      "password": "123456",
+      "phone": "3175303978",
+      "email": "jpenagos@refinal.com",
+      "id": 3
+    },
+    {
+      "name": "Diana",
+      "lastname": "Villa",
+      "identity": "1122567890",
+      "role": "Recolector",
+      "state": "Activo",
+      "password": "123456",
+      "phone": "3005303976",
+      "email": "dvilla@refinal.com",
+      "id": 4
+    },
+    {
+      "name": "Luis Andrés",
+      "lastname": "Murillo",
+      "identity": "1144198789",
+      "role": "Administrador",
+      "state": "Activo",
+      "password": "123456",
+      "phone": "3115134078",
+      "email": "lamurillo@refinal.com",
+      "id": 5
+    },
+    {
+      "name": "Jairo",
+      "lastname": "Gutierrez",
+      "identity": "44789056",
+      "role": "Coordinador",
+      "state": "Activo",
+      "password": "123456",
+      "phone": "3125333977",
+      "email": "jgutierrez@refinal.com",
+      "id": 6
+    },
+    {
+      "name": "Alexandra",
+      "lastname": "Culcha",
+      "identity": "1144198786",
+      "role": "Digitador CG-UNO",
+      "state": "Inactivo",
+      "password": "123456",
+      "phone": "3145439560",
+      "email": " aculcha@refinal.com",
+      "id": 7
+    },
+    {
+      "name": "Valentina",
+      "lastname": "Zapata",
+      "identity": "72567788",
+      "role": "72567788",
+      "state": "Activo",
+      "password": "123456",
+      "phone": "3157893970",
+      "email": "vzapata@refinal.com",
+      "id": 8
+    }
   ]
 }
