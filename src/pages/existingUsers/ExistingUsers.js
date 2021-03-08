@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Default from '../../components/layouts/Default';
 import { Modal, Row, Col, Button } from 'antd';
-import { UsergroupAddOutlined } from '@ant-design/icons';
 import UserForm from '../../components/forms/UserForm';
 import { getUsers, postUser, patchUser, deleteUser } from '../../services/users';
 import MaterialTable from 'material-table';
@@ -141,9 +140,9 @@ function ExistingUsers (props) {
                         <Col span={24}>
                             <Row>
                                 <Col span={1}>
-                                    <UsergroupAddOutlined style={{color: 'blue', fontSize: 25}}/>
+                                    <span style={{fontSize: 33, color: 'blue'}} className="material-icons">groups</span>
                                 </Col>
-                                <Col span={20}>
+                                <Col span={19} offset={1}>
                                     <span style={{color: 'blue', fontSize: 20}}>Usuarios existentes</span>
                                 </Col>
                                 <Col span={3}>
@@ -169,9 +168,9 @@ function ExistingUsers (props) {
                         <Col span={24}>
                             <Row>
                                 <Col span={1}>
-                                    <UsergroupAddOutlined style={{color: 'blue', fontSize: 25}}/>
+                                    <span style={{fontSize: 30, color: 'blue'}} className="material-icons">person_search</span>
                                 </Col>
-                                <Col span={20} offset={3}>
+                                <Col span={19} offset={4}>
                                     <span style={{color: 'blue', fontSize: 20}}>Filtrar búsqueda</span>
                                 </Col>
                             </Row>
@@ -181,7 +180,7 @@ function ExistingUsers (props) {
                         </Col>
                     </Row>
                 </Col>
-                <Modal width={600} title="Agregar nuevo usuario" visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
+                <Modal width={600} title={modalLabel === 'creating' ? 'Agregar nuevo usuario' : 'Editar usuario'} visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
                     <UserForm originLabel='post' getValuesUserForm={getValuesUserForm}/>
                 </Modal>
             </Row>

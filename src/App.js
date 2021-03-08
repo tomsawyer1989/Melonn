@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { getSessions } from './services/users';
 import LoginPage from './pages/login/LoginPage';
 import ExistingUsers from './pages/existingUsers/ExistingUsers';
+import HomePage from './pages/home/HomePage';
 
 function App() {
 
@@ -58,7 +59,7 @@ function App() {
     <Route
       {...rest}
       render={localProps =>
-        loggedIn === false ? <Component {...localProps} loadingLogin={loadingLogin} getValuesLoginForm={getValuesLoginForm}/> : <Redirect to="/existing-users" />
+        loggedIn === false ? <Component {...localProps} loadingLogin={loadingLogin} getValuesLoginForm={getValuesLoginForm}/> : <Redirect to="/" />
       }
     />
   );
@@ -68,8 +69,8 @@ function App() {
     <BrowserRouter>
       <Switch>
         <GuestRoute exact path="/login" component={LoginPage} />
+        <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute exact path="/existing-users" component={ExistingUsers} />
-        <Redirect to="/login" />
       </Switch>
     </BrowserRouter>
     </>

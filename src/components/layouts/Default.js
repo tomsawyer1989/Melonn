@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
+import { NavLink } from "react-router-dom";
 import { Avatar, Layout, Menu, Button, Tooltip } from 'antd';
 import {
   MenuOutlined,
   UserOutlined,
-  UploadOutlined,
-  FileOutlined,
-  UnorderedListOutlined,
   ExportOutlined
 } from '@ant-design/icons';
 
@@ -24,12 +22,14 @@ function Default (props) {
     }
 
     return (
-        <Layout>
+        <Layout style={{minHeight: '100vh'}}>
             <Sider trigger={null} collapsible collapsed={collapsed} width={250}>
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={styles.sidebar}>
                     <Menu.Item key="1" icon={<span style={{fontSize: 30}} className="material-icons">fiber_manual_record</span>} style={styles.itemHeader}>
-                        OLSoftware
+                        <NavLink to="/" className="nav-text">
+                            OLSoftware
+                        </NavLink>
                     </Menu.Item>
                     <Menu.Item key="2" icon={<span style={{fontSize: 30}} className="material-icons">map</span>} style={styles.item}>
                         Programación
@@ -44,7 +44,9 @@ function Default (props) {
                         Roles
                     </Menu.Item>
                     <Menu.Item key="6" icon={<span style={{fontSize: 30}}>U</span>} style={styles.item}>
-                        Usuario
+                        <NavLink to="/existing-users" className="nav-text">
+                            Usuario
+                        </NavLink>
                     </Menu.Item>
                     <Menu.Item key="7" icon={<span style={{fontSize: 30}} className="material-icons">description</span>} style={styles.item}>
                         Reportes
@@ -53,22 +55,27 @@ function Default (props) {
             </Sider>
             <Layout className="site-layout">
                 <Header className="site-layout-background" style={{ padding: 0, color: 'blue' }}>
-                    {React.createElement(collapsed ? MenuOutlined : MenuOutlined, {
-                        className: 'trigger',
-                        onClick: toggle,
-                    })}
-                    <span style={{marginLeft: 15, fontSize: 20}}>Prueba Front-end</span>
-                    <Avatar style={{marginLeft: '50%'}} size="large" icon={<UserOutlined />}/>
-                    <span style={{marginLeft: 15, color: 'black'}}>{localStorage.getItem('user')}</span>
-                    <Tooltip title="Cerrar sesión">
-                        <Button shape="circle" icon={<ExportOutlined style={{color: 'blue'}}/>} style={{marginLeft: 40}} onClick={() => logOut()}/>
-                    </Tooltip>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <div>
+                            {React.createElement(collapsed ? MenuOutlined : MenuOutlined, {
+                                className: 'trigger',
+                                onClick: toggle,
+                            })}
+                            <span style={{marginLeft: '20px', fontSize: 20}}>Prueba Front-end</span>
+                        </div>
+                        <div>
+                            <Avatar style={{marginRight: '15px'}} size="large" icon={<UserOutlined />}/>
+                            <span style={{marginRight: '40px', color: 'black'}}>{localStorage.getItem('user')}</span>
+                            <Tooltip title="Cerrar sesión">
+                                <Button shape="circle" icon={<ExportOutlined style={{color: 'blue'}}/>} style={{marginRight: '20px'}} onClick={() => logOut()}/>
+                            </Tooltip>
+                        </div>
+                    </div>
                 </Header>
                 <Content
                     className="site-layout-background"
                     style={{
                         margin: '24px 16px',
-                        // padding: 24,
                         minHeight: 280,
                     }}
                 >
