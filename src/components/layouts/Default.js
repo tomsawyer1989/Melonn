@@ -25,28 +25,28 @@ function Default (props) {
 
     return (
         <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+            <Sider trigger={null} collapsible collapsed={collapsed} width={250}>
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={styles.sidebar}>
-                    <Menu.Item key="1" icon={<UserOutlined style={{fontSize: 24}}/>} style={styles.itemHeader}>
+                    <Menu.Item key="1" icon={<span style={{fontSize: 30}} className="material-icons">fiber_manual_record</span>} style={styles.itemHeader}>
                         OLSoftware
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<UserOutlined style={{fontSize: 24}}/>} style={styles.item}>
+                    <Menu.Item key="2" icon={<span style={{fontSize: 30}} className="material-icons">map</span>} style={styles.item}>
                         Programación
                     </Menu.Item>
-                    <Menu.Item key="3" icon={<UnorderedListOutlined style={{fontSize: 24}}/>} style={styles.item}>
+                    <Menu.Item key="3" icon={<span style={{fontSize: 30}} className="material-icons">format_list_bulleted</span>} style={styles.item}>
                         Gestión de operaciones
                     </Menu.Item>
-                    <Menu.Item key="4" icon={<UserOutlined style={{fontSize: 24}}/>} style={styles.item}>
+                    <Menu.Item key="4" icon={<span style={{fontSize: 30}} className="material-icons">tune</span>} style={styles.item}>
                         Perfiles
                     </Menu.Item>
-                    <Menu.Item key="5" icon={<UserOutlined style={{fontSize: 24}}/>} style={styles.item}>
+                    <Menu.Item key="5" icon={<span style={{fontSize: 30}}>R</span>} style={styles.item}>
                         Roles
                     </Menu.Item>
-                    <Menu.Item key="6" icon={<UploadOutlined style={{fontSize: 24}}/>} style={styles.item}>
+                    <Menu.Item key="6" icon={<span style={{fontSize: 30}}>U</span>} style={styles.item}>
                         Usuario
                     </Menu.Item>
-                    <Menu.Item key="7" icon={<FileOutlined style={{fontSize: 24}}/>} style={styles.item}>
+                    <Menu.Item key="7" icon={<span style={{fontSize: 30}} className="material-icons">description</span>} style={styles.item}>
                         Reportes
                     </Menu.Item>
                 </Menu>
@@ -58,10 +58,10 @@ function Default (props) {
                         onClick: toggle,
                     })}
                     <span style={{marginLeft: 15, fontSize: 20}}>Prueba Front-end</span>
-                    <Avatar style={{marginLeft: '54%'}} size="large" icon={<UserOutlined />}/>
+                    <Avatar style={{marginLeft: '50%'}} size="large" icon={<UserOutlined />}/>
                     <span style={{marginLeft: 15, color: 'black'}}>{localStorage.getItem('user')}</span>
                     <Tooltip title="Cerrar sesión">
-                        <Button shape="circle" icon={<ExportOutlined />} style={{marginLeft: 40}} onClick={() => logOut()}/>
+                        <Button shape="circle" icon={<ExportOutlined style={{color: 'blue'}}/>} style={{marginLeft: 40}} onClick={() => logOut()}/>
                     </Tooltip>
                 </Header>
                 <Content
