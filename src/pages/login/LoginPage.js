@@ -26,10 +26,10 @@ function LoginPage (props) {
         <div style={{position: 'absolute'}}>
             <Row>
                 <Col span={4} offset={10} style={{color: 'white', marginTop: 270}}>
-                    <span style={{fontSize: 30}}>Aplicación OLSoftware</span>
+                    <span style={{fontSize: 30}}>Aplicación Melonn</span>
                 </Col>
                 <Col span={14} offset={10} style={{color: 'white', marginTop: 20}}>
-                    <p style={{fontSize: 16}}>Prueba práctica Front-end senior</p>
+                    <p style={{fontSize: 16}}>Prueba práctica Front-end</p>
                 </Col>
             </Row>
         </div>

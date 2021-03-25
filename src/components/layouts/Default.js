@@ -28,28 +28,13 @@ function Default (props) {
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={styles.sidebar}>
                     <Menu.Item key="1" icon={<span style={{fontSize: 30}} className="material-icons">fiber_manual_record</span>} style={styles.itemHeader}>
                         <NavLink to="/" className="nav-text">
-                            OLSoftware
+                            Melonn
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<span style={{fontSize: 30}} className="material-icons">map</span>} style={styles.item}>
-                        Programación
-                    </Menu.Item>
-                    <Menu.Item key="3" icon={<span style={{fontSize: 30}} className="material-icons">format_list_bulleted</span>} style={styles.item}>
-                        Gestión de operaciones
-                    </Menu.Item>
-                    <Menu.Item key="4" icon={<span style={{fontSize: 30}} className="material-icons">tune</span>} style={styles.item}>
-                        Perfiles
-                    </Menu.Item>
-                    <Menu.Item key="5" icon={<span style={{fontSize: 30}}>R</span>} style={styles.item}>
-                        Roles
-                    </Menu.Item>
-                    <Menu.Item key="6" icon={<span style={{fontSize: 30}}>U</span>} style={styles.item}>
+                    <Menu.Item key="6" icon={<span style={{fontSize: 30}} className="material-icons">fact_check</span>} style={styles.item}>
                         <NavLink to="/existing-users" className="nav-text">
-                            Usuario
+                            Sell order
                         </NavLink>
-                    </Menu.Item>
-                    <Menu.Item key="7" icon={<span style={{fontSize: 30}} className="material-icons">description</span>} style={styles.item}>
-                        Reportes
                     </Menu.Item>
                 </Menu>
             </Sider>
@@ -66,7 +51,7 @@ function Default (props) {
                         <div>
                             <Avatar style={{marginRight: '15px'}} size="large" icon={<UserOutlined />}/>
                             <span style={{marginRight: '40px', color: 'black'}}>{localStorage.getItem('user')}</span>
-                            <Tooltip title="Cerrar sesión">
+                            <Tooltip title="Log out">
                                 <Button shape="circle" icon={<ExportOutlined style={{color: 'blue'}}/>} style={{marginRight: '20px'}} onClick={() => logOut()}/>
                             </Tooltip>
                         </div>

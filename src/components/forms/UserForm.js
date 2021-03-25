@@ -3,9 +3,60 @@ import { Form, Input, Button, Row, Col, } from 'antd';
 
 function UserForm (props) {
 
+    const formItems = [
+        { 
+            label: 'Seller store',
+            name: 'store',
+        },
+        { 
+            label: 'Shipping method',
+            name: 'method',
+        },
+        { 
+            label: 'External order number',
+            name: 'orderNumber',
+        },
+        { 
+            label: 'Buyer full name',
+            name: 'name',
+        },
+        { 
+            label: 'Buyer phone number',
+            name: 'phone',
+        },
+        { 
+            label: 'Buyer email',
+            name: 'email',
+        },
+        { 
+            label: 'Shipping address',
+            name: 'address',
+        },
+        { 
+            label: 'Shipping city',
+            name: 'city',
+        },
+        { 
+            label: 'Shipping region',
+            name: 'region',
+        },
+        { 
+            label: 'Shipping country',
+            name: 'country',
+        },
+        { 
+            label: 'Line items',
+            name: 'items',
+        },
+    ];
+
     const handleSubmit = (values) => {
-        props.getValuesUserForm(values, props.originLabel);
+        props.getValuesUserForm(values);
     }
+
+    const hiddenModal = () => {
+        props.hiddenModal();
+    };
 
     return (
         <Form
@@ -16,89 +67,28 @@ function UserForm (props) {
             labelCol={{span: 24}}
         >
             <Row>
-                <Col span={props.originLabel === 'post' ? 9 : 24} offset={props.originLabel === 'post' ? 2 : 0}>
-                    <Form.Item
-                        label="Nombres"
-                        name="name"
-                        rules={[{ required: true, message: 'Escribe el nombre' }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                </Col>
-                <Col span={props.originLabel === 'post' ? 9 : 24} offset={props.originLabel === 'post' ? 2 : 0}>
-                    <Form.Item
-                        label="Apellidos"
-                        name="lastname"
-                        rules={[{ required: true, message: 'Escribe el apellido' }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                </Col>
-                <Col span={props.originLabel === 'post' ? 9 : 24} offset={props.originLabel === 'post' ? 2 : 0}>
-                    <Form.Item
-                        label="Identificación (C.C)"
-                        name="identity"
-                        rules={[{ required: true, message: 'Escribe la identificación' }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                </Col>
-                <Col span={props.originLabel === 'post' ? 9 : 24} offset={props.originLabel === 'post' ? 2 : 0}>
-                    <Form.Item
-                        label="Rol asociado"
-                        name="role"
-                        rules={[{ required: true, message: 'Escribe el rol asociado' }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                </Col>
-                <Col span={props.originLabel === 'post' ? 9 : 24} offset={props.originLabel === 'post' ? 2 : 0}>
-                    <Form.Item
-                        label="Estado"
-                        name="state"
-                        rules={[{ required: true, message: 'Escribe el estado' }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                </Col>
-                <Col span={props.originLabel === 'post' ? 9 : 24} offset={props.originLabel === 'post' ? 2 : 0}>
-                    <Form.Item
-                        label="Contraseña"
-                        name="password"
-                        rules={[{ required: true, message: 'Escribe la contraseña' }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                </Col>
-                <Col span={props.originLabel === 'post' ? 9 : 24} offset={props.originLabel === 'post' ? 2 : 0}>
-                    <Form.Item
-                        label="Teléfono"
-                        name="phone"
-                        rules={[{ required: true, message: 'Escribe el teléfono' }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                </Col>
-                <Col span={props.originLabel === 'post' ? 9 : 24} offset={props.originLabel === 'post' ? 2 : 0}>
-                    <Form.Item
-                        label="Correo electrónico"
-                        name="email"
-                        rules={[{ required: true, message: 'Escribe el correo electrónico' }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                </Col>
-                <Col span={props.originLabel === 'post' ? 4 : 11} offset={props.originLabel === 'post' ? 7 : 0}>
+                {formItems.map((item, i) =>
+                    <Col key={i} span={7} offset={1}>
+                        <Form.Item
+                            label={item.label}
+                            name={item.name}
+                            rules={[{ required: true, message: 'type "' + item.label + '" field' }]}
+                        >
+                            <Input/>
+                        </Form.Item>
+                    </Col>
+                )}
+                <Col span={4} offset={7}>
                     <Form.Item>
-                        <Button style={{background: 'green', width: '100%', borderRadius: 5}} type="primary" htmlType="submit" className="user-form-button">
-                            {props.originLabel === 'post' ? 'Aceptar' : 'Filtrar'}
+                        <Button style={styles.confirmButton} type="primary" htmlType="submit" className="user-form-button">
+                            Confirm
                         </Button>
                     </Form.Item>
                 </Col>
-                <Col span={props.originLabel === 'post' ? 4 : 11} offset={props.originLabel === 'post' ? 2 : 2}>
+                <Col span={4} offset={2}>
                     <Form.Item>
-                        <Button style={{background: 'white', color: 'green', width: '100%', borderRadius: 5}} type="secondary" className="user-form-button">
-                            {props.originLabel === 'post' ? 'Cancelar' : 'Limpiar'}
+                        <Button style={styles.cancelButton} type="secondary" onClick={() => hiddenModal()} className="user-form-button">
+                            Cancel
                         </Button>
                     </Form.Item>
                 </Col>
@@ -106,5 +96,19 @@ function UserForm (props) {
         </Form>
     );
 }
+
+const styles = {
+    confirmButton: {
+        background: 'green', 
+        width: '100%', 
+        borderRadius: 5
+    },
+    cancelButton: {
+        background: 'white', 
+        color: 'green', 
+        width: '100%', 
+        borderRadius: 5
+    },
+};
 
 export default UserForm;

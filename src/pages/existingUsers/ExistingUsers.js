@@ -13,33 +13,17 @@ function ExistingUsers (props) {
     const [userPatch, setUserPatch] = useState(null);
 
     const columns = [
-        {
-            title: "Nombres",
-            field: "name",
+        { 
+            title: 'External order number',
+            field: 'orderNumber',
         },
-        {
-            title: "Apellidos",
-            field: "lastname",
+        { 
+            title: 'Seller store',
+            field: 'store',
         },
-        {
-            title: "Identificación (C.C)",
-            field: "identity",
-        },
-        {
-            title: "Rol asociado",
-            field: "role",
-        },
-        {
-            title: "Estado",
-            field: "state",
-        },
-        {
-            title: "Teléfono",
-            field: "phone",
-        },
-        {
-            title: "Correo electrónico",
-            field: "email",
+        { 
+            title: 'Shipping method',
+            field: 'method',
         },
     ];
 
@@ -77,44 +61,39 @@ function ExistingUsers (props) {
         setIsModalVisible(false);
     };
 
-    const getValuesUserForm = (values, origin) => {
-        if (origin === 'post') {
-            switch (modalLabel) {
-                case 'creating':
-                    postUser(values)
-                    .then(response => {
-                        if (response.success) {
-                            const dataAux = [...data];
-                            dataAux.push(response.user);
-                            setData(dataAux);
-                        }
-                    });
-    
-                    hiddenModal();
-                break;
-    
-                case 'editing':
-                    const params = userPatch.id;
-    
-                    patchUser(params, values)
-                    .then(response => {
-                        if (response.success) {
-                            const dataAux = [...data];
-                            const index = dataAux.indexOf(userPatch);
-                            index !== -1 && dataAux.splice(index, 1);
-                            dataAux.push(response.user);
-                            setData(dataAux);
-                        }
-                    });
-    
-                    hiddenModal();
-                break;
+    const getValuesUserForm = (values) => {
+        switch (modalLabel) {
+            case 'creating':
+                postUser(values)
+                .then(response => {
+                    if (response.success) {
+                        const dataAux = [...data];
+                        dataAux.push(response.user);
+                        setData(dataAux);
+                    }
+                });
 
-                default: console.log('');
-            }
-        }
-        else {
-            alert('Esta función de filtrado, aún no está implementada.');
+                hiddenModal();
+            break;
+
+            case 'editing':
+                const params = userPatch.id;
+
+                patchUser(params, values)
+                .then(response => {
+                    if (response.success) {
+                        const dataAux = [...data];
+                        const index = dataAux.indexOf(userPatch);
+                        index !== -1 && dataAux.splice(index, 1);
+                        dataAux.push(response.user);
+                        setData(dataAux);
+                    }
+                });
+
+                hiddenModal();
+            break;
+
+            default: console.log('');
         }
     }
 
@@ -135,19 +114,19 @@ function ExistingUsers (props) {
     return (
         <Default logOut={logOut} render={
             <Row style={{background: '#eeefff'}}>
-                <Col xs={24} lg={{span: 18}} style={{padding: 20, background: 'white'}}>
+                <Col span={24} style={{padding: 20, background: 'white'}}>
                     <Row>
                         <Col span={24}>
                             <Row>
                                 <Col span={1}>
-                                    <span style={{fontSize: 33, color: 'blue'}} className="material-icons">groups</span>
+                                    <span style={{fontSize: 33, color: 'blue'}} className="material-icons">list_alt</span>
                                 </Col>
-                                <Col span={19} offset={1}>
-                                    <span style={{color: 'blue', fontSize: 20}}>Usuarios existentes</span>
+                                <Col span={20} offset={0}>
+                                    <span style={{color: 'blue', fontSize: 20}}>Sell order list</span>
                                 </Col>
                                 <Col span={3}>
                                     <Button type="primary" style={{width: '100%', borderRadius: 5}} onClick={() => {showModal(); setModalLabel('creating');}}>
-                                        Crear
+                                        Create
                                     </Button>
                                 </Col>
                             </Row>
@@ -163,25 +142,8 @@ function ExistingUsers (props) {
                         </Col>
                     </Row>
                 </Col>
-                <Col xs={24} lg={{span: 5, offset: 1}} style={{padding: 20, background: 'white'}}>
-                    <Row>
-                        <Col span={24}>
-                            <Row>
-                                <Col span={1}>
-                                    <span style={{fontSize: 30, color: 'blue'}} className="material-icons">person_search</span>
-                                </Col>
-                                <Col span={19} offset={4}>
-                                    <span style={{color: 'blue', fontSize: 20}}>Filtrar búsqueda</span>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col span={24} style={{marginTop: 20}}>
-                            <UserForm originLabel='search' getValuesUserForm={getValuesUserForm}/>
-                        </Col>
-                    </Row>
-                </Col>
-                <Modal width={600} title={modalLabel === 'creating' ? 'Agregar nuevo usuario' : 'Editar usuario'} visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
-                    <UserForm originLabel='post' getValuesUserForm={getValuesUserForm}/>
+                <Modal width={600} title={modalLabel === 'creating' ? 'Add sell order' : 'Edit sell order'} visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
+                    <UserForm getValuesUserForm={getValuesUserForm} hiddenModal={hiddenModal}/>
                 </Modal>
             </Row>
         }/>
