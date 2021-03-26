@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Row, Col, } from 'antd';
 
-function UserForm (props) {
+function OrderForm (props) {
 
     const formItems = [
         { 
@@ -51,7 +51,7 @@ function UserForm (props) {
     ];
 
     const handleSubmit = (values) => {
-        props.getValuesUserForm(values);
+        props.getValuesOrderForm(values);
     }
 
     const hiddenModal = () => {
@@ -60,8 +60,8 @@ function UserForm (props) {
 
     return (
         <Form
-            name="normal_user"
-            className="user-form"
+            name="normal_order"
+            className="order-form"
             initialValues={{ remember: true }}
             onFinish={handleSubmit}
             labelCol={{span: 24}}
@@ -80,14 +80,14 @@ function UserForm (props) {
                 )}
                 <Col span={4} offset={7}>
                     <Form.Item>
-                        <Button style={styles.confirmButton} type="primary" htmlType="submit" className="user-form-button">
+                        <Button style={styles.confirmButton} type="primary" htmlType="submit" className="order-form-button">
                             Confirm
                         </Button>
                     </Form.Item>
                 </Col>
                 <Col span={4} offset={2}>
                     <Form.Item>
-                        <Button style={styles.cancelButton} type="secondary" onClick={() => hiddenModal()} className="user-form-button">
+                        <Button style={styles.cancelButton} type="secondary" onClick={() => hiddenModal()} className="order-form-button">
                             Cancel
                         </Button>
                     </Form.Item>
@@ -111,4 +111,4 @@ const styles = {
     },
 };
 
-export default UserForm;
+export default OrderForm;

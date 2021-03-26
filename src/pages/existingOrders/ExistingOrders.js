@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Default from '../../components/layouts/Default';
 import { Modal, Row, Col, Button } from 'antd';
-import UserForm from '../../components/forms/UserForm';
-import { getUsers, postUser, patchUser, deleteUser } from '../../services/users';
+import OrderForm from '../../components/forms/OrderForm';
+import { getOrders, postOrder, patchOrder, deleteOrder } from '../../services/orders';
 import MaterialTable from 'material-table';
 
-function ExistingUsers (props) {
+function ExistingOrders (props) {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [data, setData] = useState([]);
     const [modalLabel, setModalLabel] = useState('');
-    const [userPatch, setUserPatch] = useState(null);
+    const [orderPatch, setOrderPatch] = useState(null);
 
     const columns = [
         { 
@@ -31,20 +31,20 @@ function ExistingUsers (props) {
         {
             icon: 'edit',
             tooltip: 'Editar',
-            onClick: (event, rowData) => {showModal(); setModalLabel('editing'); setUserPatch(rowData);}
+            onClick: (event, rowData) => {showModal(); setModalLabel('editing'); setOrderPatch(rowData);}
         },
         {
             icon: 'delete',
             tooltip: 'Eliminar',
-            onClick: (event, rowData) => removeUser(rowData)
+            onClick: (event, rowData) => removeOrder(rowData)
         }
     ];
 
     useEffect(() => {
-        getUsers()
+        getOrders()
         .then(response => {
             if (response.success) {
-                setData(response.users);
+                setData(response.orders);
             }
         });
     }, []);
@@ -61,14 +61,14 @@ function ExistingUsers (props) {
         setIsModalVisible(false);
     };
 
-    const getValuesUserForm = (values) => {
+    const getValuesOrderForm = (values) => {
         switch (modalLabel) {
             case 'creating':
-                postUser(values)
+                postOrder(values)
                 .then(response => {
                     if (response.success) {
                         const dataAux = [...data];
-                        dataAux.push(response.user);
+                        dataAux.push(response.order);
                         setData(dataAux);
                     }
                 });
@@ -77,15 +77,15 @@ function ExistingUsers (props) {
             break;
 
             case 'editing':
-                const params = userPatch.id;
+                const params = orderPatch.id;
 
-                patchUser(params, values)
+                patchOrder(params, values)
                 .then(response => {
                     if (response.success) {
                         const dataAux = [...data];
-                        const index = dataAux.indexOf(userPatch);
+                        const index = dataAux.indexOf(orderPatch);
                         index !== -1 && dataAux.splice(index, 1);
-                        dataAux.push(response.user);
+                        dataAux.push(response.order);
                         setData(dataAux);
                     }
                 });
@@ -97,14 +97,14 @@ function ExistingUsers (props) {
         }
     }
 
-    const removeUser = (user) => {
-        const params = user.id;
+    const removeOrder = (order) => {
+        const params = order.id;
 
-        deleteUser(params)
+        deleteOrder(params)
         .then(response => {
             if (response.success) {
                 const dataAux = [...data];
-                const index = dataAux.indexOf(user);
+                const index = dataAux.indexOf(order);
                 index !== -1 && dataAux.splice(index, 1);
                 setData(dataAux);
             }
@@ -143,11 +143,11 @@ function ExistingUsers (props) {
                     </Row>
                 </Col>
                 <Modal width={600} title={modalLabel === 'creating' ? 'Add sell order' : 'Edit sell order'} visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
-                    <UserForm getValuesUserForm={getValuesUserForm} hiddenModal={hiddenModal}/>
+                    <OrderForm getValuesOrderForm={getValuesOrderForm} hiddenModal={hiddenModal}/>
                 </Modal>
             </Row>
         }/>
     );
 }
 
-export default ExistingUsers;
+export default ExistingOrders;

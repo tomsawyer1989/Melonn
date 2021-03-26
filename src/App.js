@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { getSessions } from './services/users';
 import LoginPage from './pages/login/LoginPage';
-import ExistingUsers from './pages/existingUsers/ExistingUsers';
+import ExistingOrders from './pages/existingOrders/ExistingOrders';
 import HomePage from './pages/home/HomePage';
 
 function App() {
@@ -70,7 +70,7 @@ function App() {
       <Switch>
         <GuestRoute exact path="/login" component={LoginPage} />
         <PrivateRoute exact path="/" component={HomePage} />
-        <PrivateRoute exact path="/existing-users" component={ExistingUsers} />
+        <PrivateRoute exact path="/existing-orders" component={ExistingOrders} />
       </Switch>
     </BrowserRouter>
     </>

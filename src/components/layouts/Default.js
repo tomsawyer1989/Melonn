@@ -32,7 +32,7 @@ function Default (props) {
                         </NavLink>
                     </Menu.Item>
                     <Menu.Item key="6" icon={<span style={{fontSize: 30}} className="material-icons">fact_check</span>} style={styles.item}>
-                        <NavLink to="/existing-users" className="nav-text">
+                        <NavLink to="/existing-orders" className="nav-text">
                             Sell order
                         </NavLink>
                     </Menu.Item>
