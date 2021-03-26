@@ -1,54 +1,79 @@
-import React from 'react';
-import { Form, Input, Button, Row, Col, } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Select, Button, Row, Col, } from 'antd';
+import { getMethodsList, getMethodDetails, getOffDaysList } from '../../services/melonn';
+
+const { Option } = Select;
 
 function OrderForm (props) {
+
+    const [methods, setMethods] = useState([]);
 
     const formItems = [
         { 
             label: 'Seller store',
             name: 'store',
+            type: 'input',
         },
         { 
             label: 'Shipping method',
             name: 'method',
+            type: 'select',
         },
         { 
             label: 'External order number',
             name: 'orderNumber',
+            type: 'input',
         },
         { 
             label: 'Buyer full name',
             name: 'name',
+            type: 'input',
         },
         { 
             label: 'Buyer phone number',
             name: 'phone',
+            type: 'input',
         },
         { 
             label: 'Buyer email',
             name: 'email',
+            type: 'input',
         },
         { 
             label: 'Shipping address',
             name: 'address',
+            type: 'input',
         },
         { 
             label: 'Shipping city',
             name: 'city',
+            type: 'input',
         },
         { 
             label: 'Shipping region',
             name: 'region',
+            type: 'input',
         },
         { 
             label: 'Shipping country',
             name: 'country',
+            type: 'input',
         },
         { 
             label: 'Line items',
             name: 'items',
+            type: 'input',
         },
     ];
+
+    useEffect(() => {
+        getMethodsList()
+        .then(response => {
+            if (response.success) {
+                setMethods(response.methods);
+            }
+        });
+    }, []);
 
     const handleSubmit = (values) => {
         props.getValuesOrderForm(values);
@@ -68,15 +93,37 @@ function OrderForm (props) {
         >
             <Row>
                 {formItems.map((item, i) =>
-                    <Col key={i} span={7} offset={1}>
-                        <Form.Item
-                            label={item.label}
-                            name={item.name}
-                            rules={[{ required: true, message: 'type "' + item.label + '" field' }]}
-                        >
-                            <Input/>
-                        </Form.Item>
-                    </Col>
+                    {switch (item.type) {
+                        case 'select':
+                            return(
+                                <Col key={i} span={7} offset={1}>
+                                    <Form.Item
+                                        label={item.label}
+                                        name={item.name}
+                                        rules={[{ required: true, message: 'type "' + item.label + '" field' }]}
+                                    >
+                                        <Select placeholder={"Select " + item.label}>
+                                            {methods.map(item =>
+                                                <Option key={item.id} value={item.name}>{item.name}</Option>
+                                            )}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            );
+                    
+                        default:
+                            return (
+                                <Col key={i} span={7} offset={1}>
+                                    <Form.Item
+                                        label={item.label}
+                                        name={item.name}
+                                        rules={[{ required: true, message: 'type "' + item.label + '" field' }]}
+                                    >
+                                        <Input/>
+                                    </Form.Item>
+                                </Col>
+                            );
+                    }}
                 )}
                 <Col span={4} offset={7}>
                     <Form.Item>
