@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Default from '../../components/layouts/Default';
 import { Modal, Row, Col, Button } from 'antd';
 import OrderForm from '../../components/forms/OrderForm';
-import { getOrders, postOrder, patchOrder, deleteOrder } from '../../services/orders';
+import OrderDetail from '../../components/forms/OrderDetail';
+import { getOrders, postOrder, deleteOrder } from '../../services/orders';
 import MaterialTable from 'material-table';
 
 function ExistingOrders (props) {
@@ -10,7 +11,7 @@ function ExistingOrders (props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [data, setData] = useState([]);
     const [modalLabel, setModalLabel] = useState('');
-    const [orderPatch, setOrderPatch] = useState(null);
+    const [order, setOrder] = useState(null);
 
     const columns = [
         { 
@@ -35,7 +36,7 @@ function ExistingOrders (props) {
         {
             icon: 'edit',
             tooltip: 'Editar',
-            onClick: (event, rowData) => {showModal(); setModalLabel('editing'); setOrderPatch(rowData);}
+            onClick: (event, rowData) => {showModal(); setModalLabel('consulting'); setOrder(rowData);}
         },
         {
             icon: 'delete',
@@ -66,39 +67,16 @@ function ExistingOrders (props) {
     };
 
     const getValuesOrderForm = (values) => {
-        switch (modalLabel) {
-            case 'creating':
-                postOrder(values)
-                .then(response => {
-                    if (response.success) {
-                        const dataAux = [...data];
-                        dataAux.push(response.order);
-                        setData(dataAux);
-                    }
-                });
+        postOrder(values)
+        .then(response => {
+            if (response.success) {
+                const dataAux = [...data];
+                dataAux.push(response.order);
+                setData(dataAux);
+            }
+        });
 
-                hiddenModal();
-            break;
-
-            case 'editing':
-                const params = orderPatch.id;
-
-                patchOrder(params, values)
-                .then(response => {
-                    if (response.success) {
-                        const dataAux = [...data];
-                        const index = dataAux.indexOf(orderPatch);
-                        index !== -1 && dataAux.splice(index, 1);
-                        dataAux.push(response.order);
-                        setData(dataAux);
-                    }
-                });
-
-                hiddenModal();
-            break;
-
-            default: console.log('');
-        }
+        hiddenModal();
     }
 
     const removeOrder = (order) => {
@@ -146,8 +124,12 @@ function ExistingOrders (props) {
                         </Col>
                     </Row>
                 </Col>
-                <Modal width={600} title={modalLabel === 'creating' ? 'Add sell order' : 'Edit sell order'} visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
-                    <OrderForm getValuesOrderForm={getValuesOrderForm} hiddenModal={hiddenModal}/>
+                <Modal width={600} title={modalLabel === 'creating' ? 'Add sell order' : 'Consulting sell order'} visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
+                    {modalLabel === 'creating' ? 
+                        <OrderForm getValuesOrderForm={getValuesOrderForm} hiddenModal={hiddenModal}/>
+                        :
+                        <OrderDetail order={order}/>
+                    }
                 </Modal>
             </Row>
         }/>

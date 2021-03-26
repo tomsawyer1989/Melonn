@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Button, Row, Col, } from 'antd';
-import { getMethodsList, getMethodDetails, getOffDaysList } from '../../services/melonn';
+import { getMethodsList } from '../../services/melonn';
 
 const { Option } = Select;
 
