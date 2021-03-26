@@ -1,4 +1,4 @@
-import { ordersEndpoint } from './config/endpoints';
+import { ordersEndpoint, promisesEndpoint } from './config/endpoints';
 import { optionsGET, optionsPOST, optionsPATCH, optionsDELETE } from './config/options';
 
 export const getOrders = async () => {
@@ -90,6 +90,30 @@ export const deleteOrder = async (params) => {
     };
   } catch (err) {
     console.log(`Unable to delete the information to the database: ${err}`);
+    throw err
+  }
+}
+
+export const getPromises = async () => {
+  try {
+    const response = await fetch(promisesEndpoint(), optionsGET());
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: 'unauthorized',
+      };
+    }
+
+    const promises = await response.json();
+
+    return {
+      success: true,
+      message: 'OK',
+      promises,
+    };
+  } catch (err) {
+    console.log(`Unable to get the information to the database: ${err}`);
     throw err
   }
 }

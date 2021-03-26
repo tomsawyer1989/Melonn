@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, List, Form, Input, Select, Button, Row, Col, } from 'antd';
-import { getMethodsList } from '../../services/melonn';
+import { getPromises } from '../../services/orders';
 
 const { TabPane } = Tabs;
 
@@ -10,6 +10,8 @@ function OrderDetail (props) {
     const [shippingData, setShippingData] = useState([]);
 
     useEffect(() => {
+        getPromises();
+
         getOrderInfo();
         getShippingInfo();
     }, []);
