@@ -34,13 +34,13 @@ function ExistingOrders (props) {
 
     const actions = [
         {
-            icon: 'edit',
-            tooltip: 'Editar',
+            icon: 'search',
+            tooltip: 'Check',
             onClick: (event, rowData) => {showModal(); setModalLabel('consulting'); setOrder(rowData);}
         },
         {
             icon: 'delete',
-            tooltip: 'Eliminar',
+            tooltip: 'Delete',
             onClick: (event, rowData) => removeOrder(rowData)
         }
     ];
