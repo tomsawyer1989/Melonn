@@ -3,6 +3,7 @@ import Default from '../../components/layouts/Default';
 import { Modal, Row, Col, Button } from 'antd';
 import OrderForm from '../../components/forms/OrderForm';
 import { getOrders, postOrder, patchOrder, deleteOrder } from '../../services/orders';
+import { getMethodsList, getMethodDetails, getOffDaysList } from '../../services/melonn';
 import MaterialTable from 'material-table';
 
 function ExistingOrders (props) {
@@ -20,6 +21,10 @@ function ExistingOrders (props) {
         { 
             title: 'Seller store',
             field: 'store',
+        },
+        { 
+            title: 'Creation date',
+            field: 'date',
         },
         { 
             title: 'Shipping method',
@@ -41,6 +46,13 @@ function ExistingOrders (props) {
     ];
 
     useEffect(() => {
+        getMethodsList()
+        .then(response => {
+            if (response.success) {
+                console.log(response.methods);
+            }
+        });
+
         getOrders()
         .then(response => {
             if (response.success) {
