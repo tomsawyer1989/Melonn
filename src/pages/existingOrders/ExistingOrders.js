@@ -3,7 +3,7 @@ import Default from '../../components/layouts/Default';
 import { Modal, Row, Col, Button } from 'antd';
 import OrderForm from '../../components/forms/OrderForm';
 import OrderDetail from '../../components/forms/OrderDetail';
-import { getOrders, postOrder, deleteOrder } from '../../services/orders';
+import { getOrders, postOrder, deleteOrder, getMethodsList } from '../../services/orders';
 import MaterialTable from 'material-table';
 
 function ExistingOrders (props) {
@@ -12,6 +12,7 @@ function ExistingOrders (props) {
     const [data, setData] = useState([]);
     const [modalLabel, setModalLabel] = useState('');
     const [order, setOrder] = useState(null);
+    const [methods, setMethods] = useState([]);
 
     const columns = [
         { 
@@ -50,6 +51,15 @@ function ExistingOrders (props) {
         .then(response => {
             if (response.success) {
                 setData(response.orders);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        getMethodsList()
+        .then(response => {
+            if (response.success) {
+                setMethods(response.methods);
             }
         });
     }, []);
@@ -126,9 +136,9 @@ function ExistingOrders (props) {
                 </Col>
                 <Modal width={600} title={modalLabel === 'creating' ? 'Add sell order' : 'Consulting sell order'} visible={isModalVisible} footer={null} onCancel={() => hiddenModal()}>
                     {modalLabel === 'creating' ? 
-                        <OrderForm getValuesOrderForm={getValuesOrderForm} hiddenModal={hiddenModal}/>
+                        <OrderForm methods={methods} getValuesOrderForm={getValuesOrderForm} hiddenModal={hiddenModal}/>
                         :
-                        <OrderDetail order={order}/>
+                        <OrderDetail order={order} methods={methods}/>
                     }
                 </Modal>
             </Row>

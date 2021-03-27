@@ -1,5 +1,5 @@
-import { ordersEndpoint, promisesEndpoint } from './config/endpoints';
-import { optionsGET, optionsPOST, optionsPATCH, optionsDELETE } from './config/options';
+import { ordersEndpoint, promisesEndpoint, methodsListEndpoint } from './config/endpoints';
+import { optionsGET, optionsPOST, optionsDELETE } from './config/options';
 
 export const getOrders = async () => {
   try {
@@ -49,30 +49,6 @@ export const postOrder = async (body) => {
   }
 }
 
-export const patchOrder = async (params, body) => {
-  try {
-    const response = await fetch(ordersEndpoint(params), optionsPATCH(body));
-
-    if (!response.ok) {
-      return {
-        success: false,
-        message: 'unauthorized',
-      };
-    }
-
-    const order = await response.json();   // El json-server responde con el usuario editado
-
-    return {
-      success: true,
-      message: 'OK',
-      order,
-    };
-  } catch (err) {
-    console.log(`Unable to patch the information to the database: ${err}`);
-    throw err
-  }
-}
-
 export const deleteOrder = async (params) => {
   try {
     const response = await fetch(ordersEndpoint(params), optionsDELETE());
@@ -94,9 +70,9 @@ export const deleteOrder = async (params) => {
   }
 }
 
-export const getPromises = async () => {
+export const getPromises = async (params) => {
   try {
-    const response = await fetch(promisesEndpoint(), optionsGET());
+    const response = await fetch(promisesEndpoint(params), optionsGET());
 
     if (!response.ok) {
       return {
@@ -111,6 +87,30 @@ export const getPromises = async () => {
       success: true,
       message: 'OK',
       promises,
+    };
+  } catch (err) {
+    console.log(`Unable to get the information to the database: ${err}`);
+    throw err
+  }
+}
+
+export const getMethodsList = async () => {
+  try {
+    const response = await fetch(methodsListEndpoint(), optionsGET());
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: 'unauthorized',
+      };
+    }
+
+    const methods = await response.json();
+
+    return {
+      success: true,
+      message: 'OK',
+      methods,
     };
   } catch (err) {
     console.log(`Unable to get the information to the database: ${err}`);

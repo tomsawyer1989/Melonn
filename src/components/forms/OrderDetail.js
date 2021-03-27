@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs, List, Form, Input, Select, Button, Row, Col, } from 'antd';
+import { Tabs, List } from 'antd';
 import { getPromises } from '../../services/orders';
 
 const { TabPane } = Tabs;
@@ -8,10 +8,20 @@ function OrderDetail (props) {
 
     const [orderData, setOrderData] = useState([]);
     const [shippingData, setShippingData] = useState([]);
+    const [promiseData, setPromiseData] = useState([]);
 
     useEffect(() => {
-        getPromises();
+        const methodObject = props.methods.filter(item => item.name === props.order.method)[0];
 
+        getPromises(methodObject.id)
+        .then(response => {
+            if (response.success) {
+                getPromiseInfo(response.promises);
+            }
+        });        
+    }, []);
+
+    useEffect(() => {
         getOrderInfo();
         getShippingInfo();
     }, []);
@@ -66,6 +76,47 @@ function OrderDetail (props) {
         setShippingData(dataAux);
     }
 
+    const getPromiseInfo = (promises) => {
+        const dataAux = [];
+
+        dataAux.push(
+            {
+                title: 'Pack promise min',
+                value: promises.pack_promise_min,
+            },
+            {
+                title: 'Pack promise max',
+                value: promises.pack_promise_max,
+            },
+            {
+                title: 'Ship promise min',
+                value: promises.ship_promise_min,
+            },
+            {
+                title: 'Ship promise max',
+                value: promises.ship_promise_max,
+            },
+            {
+                title: 'Delivery promise min',
+                value: promises.delivery_promise_min,
+            },
+            {
+                title: 'Delivery promise max',
+                value: promises.delivery_promise_max,
+            },
+            {
+                title: 'Ready pickup promise min',
+                value: promises.ready_pickup_promise_min,
+            },
+            {
+                title: 'Ready pickup promise max',
+                value: promises.ready_pickup_promise_max,
+            },
+        );
+
+        setPromiseData(dataAux);
+    }
+
     return(
         <Tabs defaultActiveKey="1">
             <TabPane tab="Order information" key="1">
@@ -97,9 +148,9 @@ function OrderDetail (props) {
                 />
             </TabPane>
             <TabPane tab="Promise dates" key="3">
-                {/* <List
+                <List
                     itemLayout="horizontal"
-                    dataSource={orderData}
+                    dataSource={promiseData}
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
@@ -108,7 +159,7 @@ function OrderDetail (props) {
                             />
                         </List.Item>
                     )}
-                /> */}
+                />
             </TabPane>
             <TabPane tab="Line items" key="4">
                 {/* <List

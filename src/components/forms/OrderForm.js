@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Input, Select, Button, Row, Col, } from 'antd';
-import { getMethodsList } from '../../services/melonn';
 
 const { Option } = Select;
 
 function OrderForm (props) {
-
-    const [methods, setMethods] = useState([]);
 
     const formItems = [
         { 
@@ -66,15 +63,6 @@ function OrderForm (props) {
         },
     ];
 
-    useEffect(() => {
-        getMethodsList()
-        .then(response => {
-            if (response.success) {
-                setMethods(response.methods);
-            }
-        });
-    }, []);
-
     const handleSubmit = (values) => {
         props.getValuesOrderForm(values);
     }
@@ -103,7 +91,7 @@ function OrderForm (props) {
                                         rules={[{ required: true, message: 'type "' + item.label + '" field' }]}
                                     >
                                         <Select placeholder={"Select " + item.label}>
-                                            {methods.map(item =>
+                                            {props.methods.map(item =>
                                                 <Option key={item.id} value={item.name}>{item.name}</Option>
                                             )}
                                         </Select>
