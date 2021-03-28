@@ -19,62 +19,62 @@ function OrderDetail (props) {
                 getPromiseInfo(response.promises);
             }
         });        
-    }, []);
+    }, [props.methods, props.order.method]);
 
     useEffect(() => {
+        const getOrderInfo = () => {
+            const dataAux = [];
+    
+            dataAux.push(
+                {
+                    title: 'External order number',
+                    value: props.order.orderNumber,
+                },
+                {
+                    title: 'Buyer full name',
+                    value: props.order.name,
+                },
+                {
+                    title: 'Buyer phone number',
+                    value: props.order.phone,
+                },
+                {
+                    title: 'Buyer email',
+                    value: props.order.email,
+                },
+            );
+    
+            setOrderData(dataAux);
+        }
+
+        const getShippingInfo = () => {
+            const dataAux = [];
+    
+            dataAux.push(
+                {
+                    title: 'Shipping address',
+                    value: props.order.address,
+                },
+                {
+                    title: 'Shipping city',
+                    value: props.order.city,
+                },
+                {
+                    title: 'Shipping region',
+                    value: props.order.region,
+                },
+                {
+                    title: 'Shipping country',
+                    value: props.order.country,
+                },
+            );
+    
+            setShippingData(dataAux);
+        }
+
         getOrderInfo();
         getShippingInfo();
     }, []);
-
-    const getOrderInfo = () => {
-        const dataAux = [];
-
-        dataAux.push(
-            {
-                title: 'External order number',
-                value: props.order.orderNumber,
-            },
-            {
-                title: 'Buyer full name',
-                value: props.order.name,
-            },
-            {
-                title: 'Buyer phone number',
-                value: props.order.phone,
-            },
-            {
-                title: 'Buyer email',
-                value: props.order.email,
-            },
-        );
-
-        setOrderData(dataAux);
-    }
-
-    const getShippingInfo = () => {
-        const dataAux = [];
-
-        dataAux.push(
-            {
-                title: 'Shipping address',
-                value: props.order.address,
-            },
-            {
-                title: 'Shipping city',
-                value: props.order.city,
-            },
-            {
-                title: 'Shipping region',
-                value: props.order.region,
-            },
-            {
-                title: 'Shipping country',
-                value: props.order.country,
-            },
-        );
-
-        setShippingData(dataAux);
-    }
 
     const getPromiseInfo = (promises) => {
         const dataAux = [];
