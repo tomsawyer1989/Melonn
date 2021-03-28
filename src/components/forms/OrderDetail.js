@@ -74,7 +74,7 @@ function OrderDetail (props) {
 
         getOrderInfo();
         getShippingInfo();
-    }, []);
+    }, [props.order]);
 
     const getPromiseInfo = (promises) => {
         const dataAux = [];
