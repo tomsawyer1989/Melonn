@@ -1,4 +1,4 @@
-export const baseUrl = 'http://localhost:3001/';
+export const baseUrl = 'https://backend-melonn.herokuapp.com/';
 
 export const sessionEndpoint = () => `${baseUrl}sessions`;
 
