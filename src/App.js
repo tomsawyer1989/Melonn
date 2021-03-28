@@ -7,7 +7,7 @@ import HomePage from './pages/home/HomePage';
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [valuesLogin, setValuesLogin] = useState(null);
   const [loadingLogin, setLoadingLogin] = useState(false);
 

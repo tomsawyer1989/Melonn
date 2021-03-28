@@ -23,7 +23,7 @@ function Default (props) {
 
     return (
         <Layout style={{minHeight: '100vh'}}>
-            <Sider trigger={null} collapsible collapsed={collapsed} width={250}>
+            <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={styles.sidebar}>
                     <Menu.Item key="1" icon={<span style={{fontSize: 30}} className="material-icons">fiber_manual_record</span>} style={styles.itemHeader}>

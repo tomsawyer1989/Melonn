@@ -66,7 +66,6 @@ function OrderForm (props) {
 
     const handleSubmit = (values) => {
         props.getValuesOrderForm(values);
-        console.log('values ', values);
     }
 
     const hiddenModal = () => {
