@@ -28,8 +28,9 @@ function OrderDetail (props) {
 
     useEffect(() => {
         const methodObject = props.methods.filter(item => item.name === props.order.method)[0];
+        const orderId = props.order.id;
 
-        getPromises(methodObject.id)
+        getPromises(`${methodObject.id}/${orderId}`)
         .then(response => {
             if (response.success) {
                 getPromiseInfo(response.promises);

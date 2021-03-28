@@ -14,7 +14,7 @@ function HomePage (props) {
                 <Col span={23} offset={1} style={{marginTop: 30}}>
                     <h2>Prueba Front End</h2>
                     <h3>Bienvenido a la prueba Front End</h3>
-                    <p>Navega en el item <strong>Usuario</strong> del sidebar...</p>
+                    <p>Navega en el item <strong>Sell order</strong> del sidebar...</p>
                 </Col>
             </Row>
         }/>
