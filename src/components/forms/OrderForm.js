@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductsList from './ProductsList';
 import { Form, Input, Select, Button, Row, Col, } from 'antd';
 
 const { Option } = Select;
@@ -59,12 +60,13 @@ function OrderForm (props) {
         { 
             label: 'Line items',
             name: 'items',
-            type: 'input',
+            type: 'inputList',
         },
     ];
 
     const handleSubmit = (values) => {
         props.getValuesOrderForm(values);
+        console.log('values ', values);
     }
 
     const hiddenModal = () => {
@@ -96,6 +98,13 @@ function OrderForm (props) {
                                             )}
                                         </Select>
                                     </Form.Item>
+                                </Col>
+                            );
+
+                        case 'inputList':
+                            return(
+                                <Col key={i} span={23} offset={1}>
+                                   <ProductsList/>
                                 </Col>
                             );
                     
